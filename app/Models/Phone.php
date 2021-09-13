@@ -9,7 +9,13 @@ class Phone extends Model
 {
     use HasFactory;
 
+    protected $table = "phones";
     protected $fillable = [
-        'phone'
+        'phone',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
