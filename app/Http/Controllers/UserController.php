@@ -83,6 +83,6 @@ class UserController extends Controller
 
         $status = "delete success";
 
-        return response()->json(compact('user', 'status'), 200);
+        return response()->json(compact('status'), 200);
     }
 }

@@ -10,7 +10,7 @@ class PhoneController extends Controller
 {
     public function createPhone(Request $request)
     {
-        if (User::where('id', $request->user_id)) {
+        if (User::where('id', $request->user_id)->first()) {
             $phone = new Phone();
             $phone->phone = $request->phone;
             $phone->user_id = $request->user_id;
