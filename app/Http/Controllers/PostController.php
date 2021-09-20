@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,7 @@ class PostController extends Controller
         $post->url_image = $data['url_image'];
         $post->save();
 
-        $post->comment;
+        // $post->comment;
 
         $status = "success creating data post";
 
@@ -37,6 +38,8 @@ class PostController extends Controller
         $data = $request->all();
 
         // Jika title ada dan tidak kosong
+        // isset = cek variable
+        // empty = cek variable dan value
         if (isset($data['title']) && !empty($data['title'])) {
             $post->title = $data['title'];
         }
@@ -50,5 +53,26 @@ class PostController extends Controller
         if (isset($data['url_image']) && !empty($data['url_image'])) {
             $post->url_image = $data['url_image'];
         }
+
+        $post->save();
+
+        $status = "success updating data post";
+
+        return response()->json(compact('post', 'status'), 200);
+    }
+
+    public function deletePost(Post $post)
+    {
+        $comments = $post->comment;
+
+        foreach ($comments as $comment) {
+            Comment::find($comment->id)->delete();
+        }
+
+        $post->delete();
+
+        $status = "success deleting data post";
+
+        return response()->json(compact('status'), 200);
     }
 }
